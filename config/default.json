@@ -1,6 +1,6 @@
 {
     "appSecret": "c9c330aebea90b847336fb47ecaa2e4b",
-    "pageAccessToken": "This_is_a_validation_token",
+    "pageAccessToken": "EAAJsV9cCdF8BAKZBGvafDmZA4ZA6BG6flUuKt0jfVHF0YOyzD8THUKvlhkfqEPcQY790KxfUG9YG1b230XUmDTUzf9Ofiis63UTPs2zcf3CCSkRSt13ffEoGxrds35rryKEtPNSBsP1weXxuo7FnakyZBdoXgt4I8hDnasPeOZAGBd90xRN7F",
     "validationToken": "This_is_a_validation_token",
     "serverURL": "https://mighty-springs-10054.herokuapp.com"
 }
