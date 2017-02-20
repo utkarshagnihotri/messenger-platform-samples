@@ -15,6 +15,7 @@ const
   config = require('config'),
   crypto = require('crypto'),
   express = require('express'),
+  fetch = require('node-fetch'),
   https = require('https'),  
   request = require('request');
 
@@ -301,6 +302,8 @@ function receivedMessage(event) {
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
   var message = event.message;
+  
+ const sessionId = findOrCreateSession(senderID);
 
   console.log("Received message for user %d and page %d at %d with message:", 
     senderID, recipientID, timeOfMessage);
@@ -396,7 +399,7 @@ function receivedMessage(event) {
             // This will run all actions until our bot has nothing left to do
             wit.runActions(
               sessionId, // the user's current session
-              text, // the user's message
+              messageText, // the user's message
               sessions[sessionId].context // the user's current session state
             ).then((context) => {
               // Our bot did everything it has to do.
