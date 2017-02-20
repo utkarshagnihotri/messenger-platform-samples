@@ -1,6 +1,6 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": ""
+    "appSecret": "c9c330aebea90b847336fb47ecaa2e4b",
+    "pageAccessToken": "This_is_a_validation_token",
+    "validationToken": "This_is_a_validation_token",
+    "serverURL": "https://mighty-springs-10054.herokuapp.com"
 }
