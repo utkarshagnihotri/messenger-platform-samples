@@ -10,12 +10,6 @@
 /* jshint node: true, devel: true */
 'use strict';
 
-module.exports = {
-  log: require('./lib/log'),
-  Wit: require('./lib/wit'),
-  interactive: require('./lib/interactive')
-};
-
 const 
   bodyParser = require('body-parser'),
   config = require('config'),
