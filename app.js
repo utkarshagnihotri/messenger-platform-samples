@@ -19,7 +19,16 @@ const
   request = require('request');
 
   
-
+let Wit = null;
+let log = null;
+try {
+  // if running from repo
+  Wit = require('../').Wit;
+  log = require('../').log;
+} catch (e) {
+  Wit = require('node-wit').Wit;
+  log = require('node-wit').log;
+}
 // ----------------------------------------------------------------------------
 // Wit.ai bot specific code
 
@@ -74,6 +83,8 @@ const actions = {
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
 };
+
+const WIT_TOKEN = (process.env.WIT_TOKEN) ? process.env.WIT_TOKEN : config.get('WIT_TOKEN');
 
 // Setting up our bot
 const wit = new Wit({
