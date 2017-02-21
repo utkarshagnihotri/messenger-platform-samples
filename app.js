@@ -445,7 +445,7 @@ function receivedMessage(event) {
             // Let's forward the message to the Wit.ai Bot Engine
             // This will run all actions until our bot has nothing left to do
 			console.log("audio");
-			 request.get(audioMessage.payload.url).on('data', function(data){
+			 request.get(audioMessage.payload.url).pipe(response, function(response){
 				console.log(data);
 				wit.speech(
 				data, // the user's message
