@@ -440,9 +440,9 @@ function receivedMessage(event) {
             // This will run all actions until our bot has nothing left to do
 			console.log("audio");
 			 request.get(audioMessage.payload.url).on('response', function(response){
-				console.log(response);
+				console.log(response.data);
 				wit.speech(
-				 response, // the user's message
+				 response.data, // the user's message
 				sessions[sessionId].context // the user's current session state
 				).then((context) => {
 				  // Our bot did everything it has to do.
