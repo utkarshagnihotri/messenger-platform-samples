@@ -24,11 +24,14 @@ let log = null;
 let interactive = null;
 try {
   // if running from repo
-  log = require('./').log;
-  Wit = require('./').Wit;
+  var index =  require('./');
+  log = index.log;
+  console.log(log);
+  Wit = index.Wit;
  
 } catch (e) {
 	console.log("Node Wit error")
+	console.dir(e)
  // Wit = require('node-wit').Wit;
   //log = require('node-wit').log;
 }
@@ -445,7 +448,7 @@ function receivedMessage(event) {
 			 request.get(audioMessage.payload.url).on('response', function(response){
 				console.log(response.data);
 				wit.speech(
-				 response.data, // the user's message
+				response.data, // the user's message
 				sessions[sessionId].context // the user's current session state
 				).then((context) => {
 				  // Our bot did everything it has to do.
