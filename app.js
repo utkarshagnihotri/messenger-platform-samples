@@ -23,11 +23,13 @@ let Wit = null;
 let log = null;
 try {
   // if running from repo
-  Wit = require('../').Wit;
-  log = require('../').log;
+  log: require('./lib/log'),
+  Wit: require('./lib/wit'),
+  interactive: require('./lib/interactive')
 } catch (e) {
-  Wit = require('node-wit').Wit;
-  log = require('node-wit').log;
+	console.log(e);
+ // Wit = require('node-wit').Wit;
+  //log = require('node-wit').log;
 }
 // ----------------------------------------------------------------------------
 // Wit.ai bot specific code
