@@ -27,7 +27,7 @@ try {
 
   log= require('./lib/log').Wit,
   Wit = require('./lib/wit').log,
-  interactive=require('./lib/interactive')
+  interactive=require('./lib/interactive') 
 } catch (e) {
 	console.log(e);
  // Wit = require('node-wit').Wit;
