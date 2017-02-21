@@ -24,12 +24,11 @@ let log = null;
 let interactive = null;
 try {
   // if running from repo
-
-  log= require('./lib/log').Wit,
-  Wit = require('./lib/wit').log,
-  interactive=require('./lib/interactive') 
+  log = require('./lib/log'),
+  Wit = require('./lib/wit')
+  //interactive=require('./lib/interactive') 
 } catch (e) {
-	console.log(e);
+	console.log("Node Wit error",e);
  // Wit = require('node-wit').Wit;
   //log = require('node-wit').log;
 }
