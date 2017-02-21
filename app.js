@@ -25,13 +25,10 @@ let interactive = null;
 try {
   // if running from repo
   log = require('./').log;
-  console.log(log);
   Wit = require('./').Wit;
-  console.log(Wit);
-  //interactive=require('./lib/interactive') 
+ 
 } catch (e) {
-	console.log("Node Wit error");
-	console.dir(e)
+	console.log("Node Wit error")
  // Wit = require('node-wit').Wit;
   //log = require('node-wit').log;
 }
