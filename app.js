@@ -56,17 +56,18 @@ const findOrCreateSession = (fbid) => {
 
 // Our bot actions
 const actions = {
-  send(sessionId, text) {
-	  console.log(sessionId);
-	  console.log(text);
+  send(sessionObj, message) {
+	  console.log("Session Id ", sessionObj.sessionId);
+	  console.log("Text", message);
     // Our bot has something to say!
     // Let's retrieve the Facebook user whose session belongs to
-    const recipientId = sessions[sessionId].fbid;
+	
+    const recipientId = sessions[sessionObj.sessionId].fbid;
     if (recipientId) {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-      return fbMessage(recipientId, text)
+      return fbMessage(recipientId, message.text)
       .then(() => null)
       .catch((err) => {
         console.error(
@@ -77,7 +78,7 @@ const actions = {
         );
       });
     } else {
-      console.error('Oops! Couldn\'t find user for session:', sessionId);
+      console.error('Oops! Couldn\'t find user for session:', sessionObj.sessionId);
       // Giving the wheel back to our bot
       return Promise.resolve()
     }
