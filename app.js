@@ -26,7 +26,7 @@ try {
   // if running from repo
   log = require('./').log;
   console.log(log);
-  Wit = require('./lib/wit').Wit;
+  Wit = require('./').Wit;
   console.log(Wit);
   //interactive=require('./lib/interactive') 
 } catch (e) {
