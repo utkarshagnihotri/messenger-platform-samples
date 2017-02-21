@@ -24,8 +24,8 @@ let log = null;
 let interactive = null;
 try {
   // if running from repo
-  log= require('./lib/log'),
   Wit= require('./lib/wit'),
+  log= require('./lib/log'),
   interactive=require('./lib/interactive')
 } catch (e) {
 	console.log(e);
