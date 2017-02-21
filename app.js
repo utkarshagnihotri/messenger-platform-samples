@@ -21,11 +21,12 @@ const
   
 let Wit = null;
 let log = null;
+let interactive = null;
 try {
   // if running from repo
-  log: require('./lib/log'),
-  Wit: require('./lib/wit'),
-  interactive: require('./lib/interactive')
+  log= require('./lib/log'),
+  Wit= require('./lib/wit'),
+  interactive=require('./lib/interactive')
 } catch (e) {
 	console.log(e);
  // Wit = require('node-wit').Wit;
