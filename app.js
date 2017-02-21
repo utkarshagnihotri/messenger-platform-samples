@@ -395,7 +395,7 @@ function receivedMessage(event) {
 
       default:
 	  
-	    // We received a text message
+			// We received a text message
 
             // Let's forward the message to the Wit.ai Bot Engine
             // This will run all actions until our bot has nothing left to do
@@ -425,6 +425,47 @@ function receivedMessage(event) {
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
+	
+	
+	if(messageAttachments.length == 1){
+		console.log("1");
+		
+		 var audioMessage = messageAttachments[0];
+		 console.log(audioMessage);
+		 
+		
+		 
+		 if(audioMessage.type == "audio"){
+            // Let's forward the message to the Wit.ai Bot Engine
+            // This will run all actions until our bot has nothing left to do
+			console.log("audio");
+			 request.get(audioMessage.payload.url).on('response', function(response){
+				console.log(response);
+				wit.speech(
+				 response, // the user's message
+				sessions[sessionId].context // the user's current session state
+				).then((context) => {
+				  // Our bot did everything it has to do.
+				  // Now it's waiting for further messages to proceed.
+				  console.log('Waiting for next user messages');
+
+				  // Based on the session state, you might want to reset the session.
+				  // This depends heavily on the business logic of your bot.
+				  // Example:
+				  // if (context['done']) {
+				  //   delete sessions[sessionId];
+				  // }
+
+				  // Updating the user's current session state
+				  sessions[sessionId].context = context;
+				})
+				.catch((err) => {
+				  console.error('Oops! Got an error from Wit: ', err.stack || err);
+				});
+				 
+			 });
+		}
+	}
   }
 }
 
