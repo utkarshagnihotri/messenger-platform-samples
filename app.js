@@ -73,9 +73,9 @@ const actions = {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-	  
+        
 	  if(message.quickreplies){
-		  sendQuickReply(recipientId, message);
+		  sendQuickReply(recipientId, message)
 	  }
 	  else{
 		  return fbMessage(recipientId, message.text)
@@ -864,11 +864,29 @@ function sendReceiptMessage(recipientId) {
  *
  */
 function sendQuickReply(recipientId, message) {
+	
   var messageData = {
     recipient: {
       id: recipientId
     },
-    message: message
+    message: {
+      text: "What's your favorite movie genre?",
+      quick_replies: [
+        {
+          "content_type":"text",
+          "title":"Action",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+        },
+        {
+          "content_type":"text",
+          "title":"Comedy",
+          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
+        },
+        {
+          "content_type":"location",
+        }
+      ]
+    }
   };
   callSendAPI(messageData);
 }
