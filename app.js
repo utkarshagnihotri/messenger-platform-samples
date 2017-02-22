@@ -73,16 +73,22 @@ const actions = {
       // Yay, we found our recipient!
       // Let's forward our bot response to her.
       // We return a promise to let our bot know when we're done sending
-      return fbMessage(recipientId, message.text)
-      .then(() => null)
-      .catch((err) => {
-        console.error(
-          'Oops! An error occurred while forwarding the response to',
-          recipientId,
-          ':',
-          err.stack || err
-        );
-      });
+	  
+	  if(message.quickreplies){
+		  sendQuickReply(recipientId, message);
+	  }
+	  else{
+		  return fbMessage(recipientId, message.text)
+		  .then(() => null)
+		  .catch((err) => {
+			console.error(
+			  'Oops! An error occurred while forwarding the response to',
+			  recipientId,
+			  ':',
+			  err.stack || err
+			);
+		  });
+	  }
     } else {
       console.error('Oops! Couldn\'t find user for session:', sessionObj.sessionId);
       // Giving the wheel back to our bot
@@ -857,33 +863,13 @@ function sendReceiptMessage(recipientId) {
  * Send a message with Quick Reply buttons.
  *
  */
-function sendQuickReply(recipientId) {
+function sendQuickReply(recipientId, message) {
   var messageData = {
     recipient: {
       id: recipientId
     },
-    message: {
-      text: "What's your favorite movie genre?",
-      quick_replies: [
-        {
-          "content_type":"text",
-          "title":"Action",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
-        },
-        {
-          "content_type":"text",
-          "title":"Comedy",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_COMEDY"
-        },
-        {
-          "content_type":"text",
-          "title":"Drama",
-          "payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_DRAMA"
-        }
-      ]
-    }
+    message: message
   };
-
   callSendAPI(messageData);
 }
 
