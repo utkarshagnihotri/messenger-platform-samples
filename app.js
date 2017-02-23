@@ -17,7 +17,9 @@ const
   express = require('express'),
   fetch = require('node-fetch'),
   https = require('https'),  
-  request = require('request');
+  request = require('request'),
+  http = require('http'),
+  googleMap = require('@google/maps');
   
 let Wit = null;
 let log = null;
@@ -94,7 +96,11 @@ const actions = {
       // Giving the wheel back to our bot
       return Promise.resolve()
     }
-  },
+  },sayGreetings({context, entities}){
+	  
+	console.log("Custom Actions"); 
+	 return Promise.resolve()
+  }  
   // You should implement your custom actions here
   // See https://wit.ai/docs/quickstart
 };
@@ -146,6 +152,10 @@ const PAGE_ACCESS_TOKEN = (process.env.MESSENGER_PAGE_ACCESS_TOKEN) ?
 const SERVER_URL = (process.env.SERVER_URL) ?
   (process.env.SERVER_URL) :
   config.get('serverURL');
+  
+const GOOGLE_MAP_KEY = (process.env.GOOGLE_MAP_KEY) ?
+  (process.env.GOOGLE_MAP_KEY) :
+  config.get('googleMapKey');
 
 if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   console.error("Missing config values");
@@ -442,16 +452,16 @@ function receivedMessage(event) {
 	if(messageAttachments.length == 1){
 		console.log("1");
 		
-		 var audioMessage = messageAttachments[0];
-		 console.log(audioMessage);
+		 var attachment = messageAttachments[0];
+		 console.log(attachment);
 		 
 		
 		 
-		 if(audioMessage.type == "audio"){
+		 if(attachment.type == "audio"){
             // Let's forward the message to the Wit.ai Bot Engine
             // This will run all actions until our bot has nothing left to do
 			console.log("audio");	
-			https.get(audioMessage.payload.url, function(res) {
+			https.get(attachment.payload.url, function(res) {
 				var data = [];
 				res.on('data', function(chunk) {
 					data.push(chunk);
@@ -484,7 +494,9 @@ function receivedMessage(event) {
 						});
 				});
 			});
-		}
+		}else if(attachment.type == "location"){
+			var coordinates = attachment.payload.coordinates
+		}	
 	}
   }
 }
@@ -1018,6 +1030,44 @@ const fbMessage = (id, text) => {
     return json;
   });
 };
+
+
+function reverseGeocode(coordinates){
+	var google_address = "";
+	var googleMapsClient = googleMap.createClient({
+		key: GOOGLE_MAP_KEY
+	});
+	
+	googleMapsClient.reverseGeocode({
+		latlng:coordinates
+	}, function(err, response) {
+		if (!err) {
+			google_address = response.json.formatted_address;
+			console.log(google_address);
+			return google_address;
+		}
+	});
+
+}	
+	
+function geocode(address){
+	var google_address = "";
+	var googleMapsClient = googleMap.createClient({
+		key: GOOGLE_MAP_KEY
+	});
+	
+	googleMapsClient.geocode({
+		address:address
+	}, function(err, response) {
+		if (!err) {
+			google_address = response.json.formatted_address;
+			console.log(google_address);
+			return google_address;
+		}
+	});
+
+}		
+	
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
