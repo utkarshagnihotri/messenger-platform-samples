@@ -98,11 +98,21 @@ const actions = {
     }
   },sayGreetings({context, entities}){
 	  
-	console.log("Custom Actions"); 
-	 return Promise.resolve()
-  }  
-  // You should implement your custom actions here
-  // See https://wit.ai/docs/quickstart
+	 console.log("Say Greetings"); 
+	 return Promise.resolve(context)
+  },getCurrentLocation({context, entities}){
+	  
+	 console.log("Get Current Location"); 
+	 return Promise.resolve(context)
+  }, processBill({context, entities}){
+	  
+	 console.log("processBill"); 
+	 return Promise.resolve(context)
+  }, getAddressFromAccount({context, entities}){
+	  
+	 console.log("getAddressFromAccount"); 
+	 return Promise.resolve(context)
+  }
 };
 
 const WIT_TOKEN = (process.env.WIT_TOKEN) ? process.env.WIT_TOKEN : config.get('WIT_TOKEN');
@@ -495,7 +505,11 @@ function receivedMessage(event) {
 				});
 			});
 		}else if(attachment.type == "location"){
-			var coordinates = attachment.payload.coordinates
+			var coordinates = attachment.payload.coordinates;
+			
+			var address = reverseGeocode(coordinates);	
+			
+			console.log(address);
 		}	
 	}
   }
